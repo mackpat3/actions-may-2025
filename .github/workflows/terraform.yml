@@ -7,8 +7,8 @@ on:
         required: true
         type: choice
         options: 
-        - Apply
-        - Destroy
+        - apply
+        - destroy
 
 jobs:
   deploy: 
@@ -39,4 +39,5 @@ jobs:
           terraform apply -auto-approve
         else
           terraform destroy -auto-improve
+        fi
   
