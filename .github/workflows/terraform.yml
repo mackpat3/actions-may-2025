@@ -10,6 +10,22 @@ on:
         - apply
         - destroy
 
+      region: 
+      description: "Provide region"
+      required: true
+      type: choice
+      options: 
+      - us-east-1
+      - us-east-2
+
+      ami_id:
+        description: "Provide ami_id"
+        required: true
+      
+      instance_type: 
+        description: "Provide Instance type"
+        required: true
+
 jobs:
   deploy: 
     runs-on: ubuntu-latest
