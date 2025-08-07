@@ -1,40 +1,40 @@
 name: Terraform
-on: 
+on:
   workflow_dispatch:
     inputs:
       action:
         description: "Select your choice"
         required: true
         type: choice
-        options: 
+        options:
         - apply
         - destroy
 
-      region: 
-      description: "Provide region"
-      required: true
-      type: choice
-      options: 
-      - us-east-1
-      - us-east-2
-
-      ami_id:
-        description: "Provide ami_id"
+      region:
+        description: "Provide region"
         required: true
-      
-      instance_type: 
-        description: "Provide Instance type"
+        type: choice
+        options:
+        - us-east-1
+        - us-east-2
+        
+      ami_id:
+        description: "Provide AMI ID"
+        required: true
+
+      instance_type:
+        description: "Provide Instance Type"
         required: true
 
 jobs:
-  deploy: 
+  deploy:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
     - name: Git Clone
       uses: actions/checkout@v4
 
     - name: Create tfvars file
-      run: 
+      run: |
         cat <<EOF > terraform.tfvars
         ami_id = "${{ inputs.ami_id }}"
         instance_type = "${{ inputs.instance_type }}"
@@ -49,12 +49,12 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4.3.1
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-2
 
     - name: Init
-      run: terraform init 
+      run: terraform init
 
     - name: Apply or Destroy
       run: |
@@ -64,4 +64,3 @@ jobs:
         else
           terraform destroy -auto-approve
         fi
-  
