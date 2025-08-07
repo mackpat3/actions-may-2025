@@ -56,7 +56,7 @@ jobs:
     - name: Init
       run: terraform init 
 
-    - name: apply or destroy
+    - name: Apply or Destroy
       run: |
         if [[ "${{ inputs.action }}" == "apply" ]]
         then
