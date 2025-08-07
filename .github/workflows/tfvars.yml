@@ -21,6 +21,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: "${{ inputs.environment }}"
     steps:
     - name: Git Clone
       uses: actions/checkout@v4
@@ -41,7 +42,7 @@ jobs:
         aws-region: "${{ inputs.environment }}"
 
     - name: Init
-      run: terraform init -backend-config=key="${{ inputs.environemnt }}/terraform.tfstate"
+      run: terraform init -backend-config=key="${{ inputs.environment }}/terraform.tfstate"
 
     - name: Apply or Destroy
       run: |
